@@ -1,6 +1,7 @@
 from os import abort
 from flask import Flask, render_template, request, redirect
 from models import db, GraphModel
+from sqlalchemy import func
 
 app = Flask(__name__)
 
@@ -16,20 +17,24 @@ def create_table():
 
 @app.route('/', methods=['GET', 'POST'])
 def create():
+    list = []
     if request.method == 'GET':
         return render_template('createpage.html')
 
     if request.method == 'POST':
-        id = request.form['id']
         vertices = request.form['vertices']
         arestas = request.form['arestas']
         direcionado = request.form['direcionado']
         valorado = request.form['valorado']
         graph = GraphModel(
-            id=id, vertices=vertices, arestas=arestas, direcionado=direcionado, valorado=valorado)
+           vertices=vertices, arestas=arestas, direcionado=direcionado, valorado=valorado)
         db.session.add(graph)
         db.session.commit()
-        return redirect('/data/1')
+
+        for value in db.session.query(GraphModel.id):
+            take_id = value[0]
+            list.append(take_id)
+        return redirect(f'/data/{list[-1]}')
 
 
 @app.route('/data')
@@ -43,7 +48,7 @@ def RetrieveGraph(id):
     graph = GraphModel.query.filter_by(id=id).first()
     if graph:
         return render_template('data.html', graph=graph)
-    return f"Graph with id ={id} Doenst exist"
+    return f"Graph with id ={id} Does not exist"
 
 
 @app.route('/data/<int:id>/delete', methods=['GET', 'POST'])
