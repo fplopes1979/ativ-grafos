@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 
-def create_graph(vertices,arestas,direcionado, valorado):
+def create_graph(vertices, arestas, direcionado, valorado):
 
     if direcionado == "1":
         G = nx.DiGraph()
@@ -19,13 +19,15 @@ def create_graph(vertices,arestas,direcionado, valorado):
 
     ordem = G.number_of_nodes()
 
-    pos=nx.spring_layout(G)
-    nx.draw_networkx(G,pos, with_labels = True)
-    labels = nx.get_edge_attributes(G,'weight')
-    nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+    tamanho = G.number_of_nodes() + G.number_of_edges()
 
-    with open('graph.png', 'wb') as img:
-        plt.savefig(img)
-        plt.clf()
+    # pos = nx.spring_layout(G)
+    # nx.draw_networkx(G, pos, with_labels=True)
+    # labels = nx.get_edge_attributes(G, 'weight')
+    # nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
 
-    return(ordem) #to-do retornar o grafo
+    # with open('graph.png', 'wb') as img:
+    #     plt.savefig(img)
+    #     plt.clf()
+
+    return ("ordem: ",ordem,"\ntamanho: ",tamanho)  # to-do retornar o grafo

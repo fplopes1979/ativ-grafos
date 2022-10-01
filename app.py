@@ -1,7 +1,7 @@
 from os import abort
 from flask import Flask, render_template, request, redirect
 from models import db, GraphModel
-from sqlalchemy import func
+from create_graph import create_graph
 
 app = Flask(__name__)
 
@@ -46,8 +46,10 @@ def RetrieveList():
 @app.route('/data/<int:id>')
 def RetrieveGraph(id):
     graph = GraphModel.query.filter_by(id=id).first()
+    #gf = create_graph(['a','b','c'], [('a','b')], 0, 0)
+    gf = create_graph(graph.vertices,graph.arestas, graph.direcionado, graph.valorado)
     if graph:
-        return render_template('data.html', graph=graph)
+        return render_template('data.html', graph=graph, ordem=gf)
     return f"Graph with id ={id} Does not exist"
 
 
