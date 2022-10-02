@@ -1,7 +1,12 @@
 from os import abort
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, send_file, request, redirect
 from models import db, GraphModel
 from create_graph import create_graph
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+from io import BytesIO
+import networkx as nx
 
 app = Flask(__name__)
 
@@ -46,11 +51,25 @@ def RetrieveList():
 @app.route('/data/<int:id>')
 def RetrieveGraph(id):
     graph = GraphModel.query.filter_by(id=id).first()
-    #gf = create_graph(['a','b','c'], [('a','b')], 0, 0)
-    gf = create_graph(graph.vertices,graph.arestas, graph.direcionado, graph.valorado)
     if graph:
-        return render_template('data.html', graph=graph, ordem=gf)
+        return render_template('data.html', graph=graph)
     return f"Graph with id ={id} Does not exist"
+
+@app.route('/graph')
+def graph():
+    graph = GraphModel.query.filter_by(id=id).first()
+    G = create_graph(graph.vertices,graph.arestas, graph.direcionado, graph.valorado)
+    pos = nx.spring_layout(G)
+    nx.draw_networkx(G, pos, with_labels=True)
+    labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+
+    img = BytesIO()
+    plt.savefig(img)
+    img.seek(0)
+    plt.clf()
+
+    return send_file(img, mimetype='image/png')
 
 
 @app.route('/data/<int:id>/delete', methods=['GET', 'POST'])

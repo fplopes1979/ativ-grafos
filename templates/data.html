@@ -1,10 +1,40 @@
-<h3>vertices</h3>
-<p>{{graph.vertices}}</p><hr>
-<h3>arestas</h3>
-<p>{{graph.arestas}}</p><hr>
-<h3>direcionado</h3>
-<p>{{graph.direcionado}}</p><hr>
-<h3>valorado</h3>
-<p>{{graph.valorado}}</p><hr>
-<h3>ordem</h3>
-<p>{{ordem}}</p><hr>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flask app</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Grafo</title>
+  </head>
+  <body class="main">
+    <div>
+      <h1>Grafo</h1>
+      <h3>vertices</h3>
+      <p>{{graph.vertices}}</p>
+      <hr />
+      <h3>arestas</h3>
+      <p>{{graph.arestas}}</p>
+      <hr />
+      <h3>direcionado</h3>
+      {% if graph.direcionado == 0 %}
+      <p>Não</p>
+      {% else %}
+      <p>Sim</p>
+      {% endif %}
+      <hr />
+      <h3>valorado</h3>
+      {% if graph.valorado == 0 %}
+      <p>Não</p>
+      {% else %}
+      <p>Sim</p>
+      {% endif %}
+      <hr />
+      <button class="button" onclick="location.href='/graph'" type="button">Visualizar grafo</a>
+      <button class="button2" onclick="location.href='/'" type="button">Criar outro grafo</a>
+    </div>
+    
+  </body>
+</html>

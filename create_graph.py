@@ -5,6 +5,9 @@ import networkx as nx
 
 def create_graph(vertices, arestas, direcionado, valorado):
 
+    vertices = eval(vertices)
+    arestas = eval(arestas)
+
     if direcionado == "1":
         G = nx.DiGraph()
     else:
@@ -17,9 +20,9 @@ def create_graph(vertices, arestas, direcionado, valorado):
     else:
         G.add_edges_from(arestas)
 
-    ordem = G.number_of_nodes()
+    # ordem = G.number_of_nodes()
 
-    tamanho = G.number_of_nodes() + G.number_of_edges()
+    # tamanho = G.number_of_nodes() + G.number_of_edges()
 
     # pos = nx.spring_layout(G)
     # nx.draw_networkx(G, pos, with_labels=True)
@@ -30,4 +33,4 @@ def create_graph(vertices, arestas, direcionado, valorado):
     #     plt.savefig(img)
     #     plt.clf()
 
-    return ("ordem: ",ordem,"\ntamanho: ",tamanho)  # to-do retornar o grafo
+    return (G)
