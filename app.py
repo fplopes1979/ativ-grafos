@@ -3,7 +3,7 @@ from io import BytesIO
 from os import abort
 from flask import Flask, render_template, send_file, request, redirect
 from models import db, GraphModel
-from graph_functions import create_graph, create_graph_direct, ordem_tamanho, adjacentes_grau
+from graph_functions import create_graph, create_graph_direct, ordem_tamanho, adjacentes_grau, par_vertices
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
@@ -91,7 +91,8 @@ def vertice(id):
         G = create_graph(vertices, arestas, direcionado, valorado)
         no_direct = create_graph_direct(vertices, arestas, valorado)
         adjac = adjacentes_grau(G, v1, no_direct, direcionado)
-        return render_template('vertices.html', graph=graph, adjacente=adjac, vert=v1, v2=v2)
+        par = par_vertices(G,v1,v2)
+        return render_template('vertices.html', graph=graph, adjacente=adjac, vert=v1, v2=v2,par_vertices=par)
 
 
 @app.route('/data/<int:id>/delete', methods=['GET', 'POST'])
