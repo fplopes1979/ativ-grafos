@@ -55,6 +55,8 @@ def adjacentes_grau(graph, node, no_direct, direcionado):
         setA = set(list_no_direct)
         setB = set(list)
         entrada = setA - setB
+        if list == list_no_direct:
+            entrada = "Não possui vertice de entrada"
         text = """ Lista de vértices adjacentes: {}  |
         Grau de saída: {}  |
         Grau de entrada: {}  |
@@ -71,7 +73,7 @@ def par_vertices(graph,v1,v2):
     v2 = eval(v2)
     tem_path = False
     tem_path = nx.has_path(graph, v1, v2)
-    path, custo = [],0
+    path, custo = ["Não tem caminho entre esses vértices"],0
 
     is_adjacent = False
     for n in graph.neighbors(v1):
