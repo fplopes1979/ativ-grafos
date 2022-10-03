@@ -54,10 +54,10 @@ def graph():
     global G
     G = create_graph(vertices, arestas, direcionado, valorado)
     pos = nx.spring_layout(G)
-    nx.draw_networkx(G, pos, with_labels=True)
+    nx.draw_networkx(G, pos, with_labels=True, node_size=150, node_color="skyblue", node_shape="o", alpha=0.5, linewidths=4, font_size=14,
+                     font_weight="bold", width=2, edge_color="grey")
     labels = nx.get_edge_attributes(G, 'weight')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-
     img = BytesIO()
     plt.savefig(img)
     img.seek(0)
@@ -91,8 +91,8 @@ def vertice(id):
         G = create_graph(vertices, arestas, direcionado, valorado)
         no_direct = create_graph_direct(vertices, arestas, valorado)
         adjac = adjacentes_grau(G, v1, no_direct, direcionado)
-        par = par_vertices(G,v1,v2)
-        return render_template('vertices.html', graph=graph, adjacente=adjac, vert=v1, v2=v2,par_vertices=par)
+        par = par_vertices(G, v1, v2)
+        return render_template('vertices.html', graph=graph, adjacente=adjac, vert=v1, v2=v2, par_vertices=par)
 
 
 @app.route('/data/<int:id>/delete', methods=['GET', 'POST'])

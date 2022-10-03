@@ -20,17 +20,20 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #444;
+  color: rgb(68, 68, 68);
 }
 html {
   margin: 50px;
-  background-color: #3a3335;
   background-image: url('https://images.squarespace-cdn.com/content/v1/56ed75f3f850826d78236699/1539524173168-3IJXMEBCZTXF542AZ6R5/graph_cluster_distant.png?format=1000w');
   background-repeat: no-repeat;
 	background-size: 120%;
 }
 h1 {
   color: #d81e5b;
+}
+
+h3 {
+  color: rgb(115, 17, 227);
 }
 
 .main {

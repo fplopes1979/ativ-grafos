@@ -77,7 +77,7 @@ def par_vertices(graph,v1,v2):
 
     path = nx.dijkstra_path(graph, source=v1, target=v2, weight='weight')
     
-    custo = nx.dijkstra_path_length(graph, source=v1, target=v1)
+    custo = nx.dijkstra_path_length(graph, source=v1, target=v2)
     
     text = """ Adjacentes: {}  |
         Caminho mais curto: {}  |
