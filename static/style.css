@@ -16,11 +16,6 @@ img {
 	display: block;
 }
 
-input {
-	appearance: none;
-	border-radius: 0;
-}
-
 .card {
 	margin: 2rem auto;
 	display: flex;

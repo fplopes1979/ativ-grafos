@@ -12,25 +12,34 @@
   <body class="main">
     <div>
       <h1>Grafo</h1>
-      <h3>vertices</h3>
+      <h3>Vertices</h3>
       <p>{{graph.vertices}}</p>
       <hr />
-      <h3>arestas</h3>
+      <h3>Arestas</h3>
       <p>{{graph.arestas}}</p>
       <hr />
-      <h3>direcionado</h3>
+      <h3>Direcionado</h3>
       {% if graph.direcionado == 0 %}
       <p>Não</p>
       {% else %}
       <p>Sim</p>
       {% endif %}
       <hr />
-      <h3>valorado</h3>
+      <h3>Valorado</h3>
       {% if graph.valorado == 0 %}
       <p>Não</p>
       {% else %}
       <p>Sim</p>
       {% endif %}
+      <hr /><h3>Ordem e tamanho</h3>
+      <p>{{ordem}}</p>
+      <hr />
+      <h3>Informações sobre vértice(s):</h3>
+      <form method="POST">
+        <input name="v1">
+        <input name="v2">
+        <input type="submit">
+      </form>
       <hr />
       <button class="button" onclick="location.href='/graph'" type="button">Visualizar grafo</a>
       <button class="button2" onclick="location.href='/'" type="button">Criar outro grafo</a>

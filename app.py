@@ -1,12 +1,12 @@
+import networkx as nx
+from io import BytesIO
 from os import abort
 from flask import Flask, render_template, send_file, request, redirect
 from models import db, GraphModel
-from create_graph import create_graph
+from graph_functions import create_graph, create_graph_direct, ordem_tamanho, adjacentes_grau
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-from io import BytesIO
-import networkx as nx
 
 app = Flask(__name__)
 
@@ -27,12 +27,13 @@ def create():
         return render_template('createpage.html')
 
     if request.method == 'POST':
+        global vertices, arestas, direcionado, valorado
         vertices = request.form['vertices']
         arestas = request.form['arestas']
         direcionado = request.form['direcionado']
         valorado = request.form['valorado']
         graph = GraphModel(
-           vertices=vertices, arestas=arestas, direcionado=direcionado, valorado=valorado)
+            vertices=vertices, arestas=arestas, direcionado=direcionado, valorado=valorado)
         db.session.add(graph)
         db.session.commit()
 
@@ -48,17 +49,10 @@ def RetrieveList():
     return render_template('datalist.html', graphs=graphs)
 
 
-@app.route('/data/<int:id>')
-def RetrieveGraph(id):
-    graph = GraphModel.query.filter_by(id=id).first()
-    if graph:
-        return render_template('data.html', graph=graph)
-    return f"Graph with id ={id} Does not exist"
-
 @app.route('/graph')
 def graph():
-    graph = GraphModel.query.filter_by(id=id).first()
-    G = create_graph(graph.vertices,graph.arestas, graph.direcionado, graph.valorado)
+    global G
+    G = create_graph(vertices, arestas, direcionado, valorado)
     pos = nx.spring_layout(G)
     nx.draw_networkx(G, pos, with_labels=True)
     labels = nx.get_edge_attributes(G, 'weight')
@@ -70,6 +64,34 @@ def graph():
     plt.clf()
 
     return send_file(img, mimetype='image/png')
+
+
+@app.route('/data/<int:id>', methods=['GET', 'POST'])
+def RetrieveGraph(id):
+    if request.method == 'POST':
+        global v1, v2
+        v1 = request.form['v1']
+        v2 = request.form['v2']
+        return redirect(f'/data/{id}/vert')
+
+    if request.method == 'GET':
+        G = create_graph(vertices, arestas, direcionado, valorado)
+        graph = GraphModel.query.filter_by(id=id).first()
+
+        if graph:
+            ordem = ordem_tamanho(G)
+            return render_template('data.html', graph=graph, ordem=ordem)
+        return f"Graph with id ={id} Does not exist"
+
+
+@app.route('/data/<int:id>/vert')
+def vertice(id):
+    graph = GraphModel.query.filter_by(id=id).first()
+    if graph:
+        G = create_graph(vertices, arestas, direcionado, valorado)
+        no_direct = create_graph_direct(vertices, arestas, valorado)
+        adjac = adjacentes_grau(G, v1, no_direct, direcionado)
+        return render_template('vertices.html', graph=graph, adjacente=adjac, vert=v1, v2=v2)
 
 
 @app.route('/data/<int:id>/delete', methods=['GET', 'POST'])
