@@ -4,14 +4,12 @@ Projeto em grupo desenvolvido em Python(Flask) para a cadeira Teoria dos Grafos 
 # Como utilizar
 Abra o terminal no repositorio local do arquivo <br>
 E faça download das dependências necessárias: 
-> `pip3 install flask`
-> `pip3 install networkx`
-> `pip3 install SQLAlchemyk`
-> `pip3 install matplotlib`
-
+> `pip3 install flask networkx SQLAlchemy matplotlib`
 
 Em seguida, é possível executar a aplicação com o comando: <br>
 > `flask run`
+
+Agora, em seu navegador abra na porta `localhost:5000`
 
 ## Tecnologias utilizadas
 - Flask
