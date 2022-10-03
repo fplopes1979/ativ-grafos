@@ -69,15 +69,18 @@ def adjacentes_grau(graph, node, no_direct, direcionado):
 def par_vertices(graph,v1,v2):
     v1 = eval(v1)
     v2 = eval(v2)
+    has_path = has_path(graph, v1, v2)
+    path, custo = None,None
 
     is_adjacent = False
     for n in graph.neighbors(v1):
         if n == v2:
             is_adjacent = True
 
-    path = nx.dijkstra_path(graph, source=v1, target=v2, weight='weight')
-    
-    custo = nx.dijkstra_path_length(graph, source=v1, target=v2)
+
+    if(has_path):
+        path = nx.dijkstra_path(graph, source=v1, target=v2, weight='weight')
+        custo = nx.dijkstra_path_length(graph, source=v1, target=v2)
     
     text = """ Adjacentes: {}  |
         Caminho mais curto: {}  |
